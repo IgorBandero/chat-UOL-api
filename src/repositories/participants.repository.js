@@ -9,7 +9,14 @@ async function createParticipant(newparticipant){
     const participant = await db.collection("participants").insertOne(newparticipant);
     return participant;
 }
+
+async function getParticipants(){
+    const participants = await db.collection("participants").find().toArray();
+    return participants;
+}
+
 export const participantsRepository = {
     findParticipantByName,
     createParticipant,
+    getParticipants,
 }

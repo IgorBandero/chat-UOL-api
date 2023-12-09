@@ -5,6 +5,14 @@ function participantAlreadyExistsError(){
     };
 }
 
-export const conflictErrors = {
+function internalServerError(){
+    return {
+        name: "InternalServerError",
+        message: "Erro no servidor",
+    };
+}
+
+export const participantsErrors = {
     participantAlreadyExistsError,
+    internalServerError,
 }
