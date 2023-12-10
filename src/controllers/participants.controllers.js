@@ -1,4 +1,3 @@
-import { MongoClient, ObjectId } from 'mongodb';
 import httpStatus from 'http-status';
 import { participantsServices } from '../services/participants.services.js';
 

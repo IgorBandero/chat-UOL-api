@@ -5,6 +5,13 @@ function participantAlreadyExistsError(){
     };
 }
 
+function participantDoesntExistsError(){
+    return {
+        name: "ParticipantDoesntExistsError",
+        message: "Participante remetente da mensagem não existe!",
+    };
+}
+
 function internalServerError(){
     return {
         name: "InternalServerError",
@@ -15,4 +22,5 @@ function internalServerError(){
 export const participantsErrors = {
     participantAlreadyExistsError,
     internalServerError,
+    participantDoesntExistsError,
 }
