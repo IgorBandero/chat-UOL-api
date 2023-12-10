@@ -46,7 +46,55 @@ async function getParticipants(){
     }
 }
 
+async function updateStatus(user){
+    
+    if(!user){
+        throw participantsErrors.userNotFound();
+    }
+    try {
+        const participant = await participantsRepository.findParticipantByName(user);
+        console.log(participant);
+        let participantFound = participant;
+        if (participantFound.length === 0){
+            throw participantsErrors.userNotFound();
+        }
+        try{
+            const participant = await participantsRepository.updateStatus(user);
+            return participant;
+        }
+        catch(err){
+            throw participantsErrors.internalServerError();
+        }       
+    }
+    catch (err){
+        throw participantsErrors.internalServerError();
+    }
+}
+
+async function removeOfflineUsers(){
+
+    try {
+        const usersOffline = await participantsRepository.findOfflineUsers();
+        if (usersOffline.length > 0) {
+            let logoutMessages = usersOffline.map(user => {
+                return {
+                    from: user.name,
+                    to: 'Todos',
+                    text: 'sai da sala...',
+                    type: 'status',
+                    time: dayjs().format("HH:mm:ss")}
+            });
+            await messagesRepository.createMessages(logoutMessages);
+            await participantsRepository.removeOfflineUsers();
+        }
+    } catch (err) {
+        throw participantsErrors.internalServerError();
+    }
+}
+
 export const participantsServices = {
     createParticipant,
-    getParticipants
+    getParticipants,
+    updateStatus,
+    removeOfflineUsers
 }

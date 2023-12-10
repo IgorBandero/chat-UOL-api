@@ -9,11 +9,25 @@ async function createParticipant(req, res){
 }
 
 async function getParticipants(req, res){
+
     const participants = await participantsServices.getParticipants();
     return res.send(participants);
 }
 
+async function updateStatus(req, res){
+
+    const user = req.headers.user;
+    const participant = await participantsServices.updateStatus(user);
+    return res.status(httpStatus.OK).send(participant);
+}
+
+async function removeOfflineUsers(){
+    participantsServices.removeOfflineUsers();
+}
+
 export const participantsControllers = {
     createParticipant,
-    getParticipants
+    getParticipants,
+    updateStatus,
+    removeOfflineUsers
 }

@@ -20,6 +20,12 @@ export function handleErrors(error, req, res, next) {
         })
     } 
 
+    if (error.name === "UserNotFound"){
+        return res.status(httpStatus.NOT_FOUND).send({
+            message: error.message
+        })
+    } 
+    
     if (error.name === "InternalServerError"){
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
             message: error.message

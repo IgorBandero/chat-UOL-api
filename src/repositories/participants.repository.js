@@ -15,8 +15,26 @@ async function getParticipants(){
     return participants;
 }
 
+async function updateStatus(user){
+    const participant = await db.collection("participants").updateOne({name: user}, {$set: {lastStatus: Date.now()}});
+    return participant;
+}
+
+async function findOfflineUsers(){
+    const usersOffline = await db.collection('participants').find({lastStatus:{$lt: (Date.now() - 10000)}}).toArray();
+    return usersOffline;
+}
+
+async function removeOfflineUsers(){
+    const usersOffline = await db.collection('participants').deleteMany({lastStatus:{$lt:(Date.now() - 10000)}});
+    return usersOffline;
+}
+
 export const participantsRepository = {
     findParticipantByName,
     createParticipant,
     getParticipants,
+    updateStatus,
+    findOfflineUsers,
+    removeOfflineUsers
 }

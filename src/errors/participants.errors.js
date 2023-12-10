@@ -12,6 +12,13 @@ function participantDoesntExistsError(){
     };
 }
 
+function userNotFound(){
+    return {
+        name: "UserNotFound",
+        message: "Usuário não encontrado!",
+    };
+}
+
 function internalServerError(){
     return {
         name: "InternalServerError",
@@ -21,6 +28,7 @@ function internalServerError(){
 
 export const participantsErrors = {
     participantAlreadyExistsError,
-    internalServerError,
     participantDoesntExistsError,
+    userNotFound,
+    internalServerError
 }

@@ -10,7 +10,13 @@ async function getMessages(user){
     return messages;
 }
 
+async function createMessages(newmessages){
+    const messages = await db.collection("messages").insertMany(newmessages);
+    return messages;
+}
+
 export const messagesRepository = {
     createMessage,
     getMessages,
+    createMessages
 }
