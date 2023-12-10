@@ -7,5 +7,6 @@ import { messagesControllers } from '../controllers/messages.controllers.js';
 const messagesRouter = Router();
 
 messagesRouter.post('/', validateSchema(messageSchema), messagesControllers.createMessage);
+messagesRouter.get('/', messagesControllers.getMessages);
 
 export { messagesRouter };

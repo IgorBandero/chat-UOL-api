@@ -5,6 +5,12 @@ async function createMessage(newmessage){
     return message;
 }
 
+async function getMessages(user){
+    const messages = await db.collection("messages").find({$or: [{type: "message"}, {to:"Todos"}, {to: user}, {from: user}]}).toArray();
+    return messages;
+}
+
 export const messagesRepository = {
     createMessage,
+    getMessages,
 }

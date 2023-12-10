@@ -9,6 +9,15 @@ async function createMessage(req, res){
     return res.status(httpStatus.CREATED).send(result.toString());
 }
 
+async function getMessages(req, res){
+
+    const user = req.headers.user;
+    let limit = req.query.limit;
+    const messages = await messagesServices.getMessages(user, limit);
+    return res.send(messages);
+}
+
 export const messagesControllers = {
     createMessage,
+    getMessages,
 }

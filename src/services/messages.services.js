@@ -28,6 +28,27 @@ async function createMessage(user, to, text, type) {
     }
 }
 
+async function getMessages(user, limit){
+
+    if (limit !== undefined && (limit <= 0 || isNaN(limit))){
+        throw messagesErrors.invalidLimitError();
+    }
+    limit = parseInt(limit);
+
+    try{
+        const messages = await messagesRepository.getMessages(user);
+        let messagesLimited = messages;
+        if(limit !== undefined){
+            messagesLimited = messages.slice(-limit);
+        }
+        return messagesLimited;
+    }
+    catch(err){
+        throw participantsErrors.internalServerError();
+    }
+}
+
 export const messagesServices = {
     createMessage,
+    getMessages,
 }
